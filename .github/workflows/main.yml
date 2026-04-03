@@ -30,6 +30,12 @@ jobs:
       - name: Build with Maven
         run: chmod +x mvnw && ./mvnw package
 
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-jar
+          path: target/*.jar
+
   docker:
     runs-on: ubuntu-latest
     needs: build
@@ -37,6 +43,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Download JAR artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-jar
+          path: target
 
       - name: Login to GHCR
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u Imre78 --password-stdin
