@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 permissions:
   contents: read
   packages: write
@@ -36,13 +39,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Login to GHCR
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u imre78 --password-stdin
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u Imre78 --password-stdin
 
       - name: Build Docker image
         run: docker build -t ghcr.io/imre78/cubix/1/homework/app:springboot .
 
       - name: Push Docker image
-        run: docker push ghcr.io/Imre78/cubix/1/homework/app:springboot
+        run: docker push ghcr.io/imre78/cubix/1/homework/app:springboot
 
   verify:
     runs-on: ubuntu-latest
